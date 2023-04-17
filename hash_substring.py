@@ -36,7 +36,7 @@ def get_occurrences(pattern, text):
         text_part_hash = get_hash(text_part)
 
         if pattern_hash == text_part_hash:
-            if pattern == text_part
+            if pattern == text_part:
                 occurrences.append(i)
 
     return occurrences 
