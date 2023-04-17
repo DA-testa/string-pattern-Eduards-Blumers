@@ -1,8 +1,5 @@
 # python3
 
-
-
-
 def read_input():
     input_type = input().rstrip()
     if "I" in input_type:
@@ -15,9 +12,6 @@ def read_input():
     return pattern, text
 
 
-
-
-
 def print_occurrences(output):
     # this function should control output, it doesn't need any return
     print(' '.join(map(str, output)))
@@ -26,23 +20,20 @@ def print_occurrences(output):
 def get_occurrences(pattern, text):
 
     pattern_len = len(pattern)
-    pattern_hash = get_hash(pattern)
     text_len = len(text)
+
+    pattern_hash = sum(ord(pattern[i]) * 31**(pattern_len-i-1) for i in range(pattern_len))
+    text_hash = sum(ord(text[i]) * 31**(pattern_len-i-1) for i in range(pattern_len))
 
     occurrences = []
 
     for i in range(0, text_len - pattern_len + 1):
-        text_part = text[i:i + pattern_len]
-        text_part_hash = get_hash(text_part)
+        if pattern == text[i:i+pattern_len]:
+            occurrences.append(i)
+        if i < text_len - pattern_len:
+            text_hash = 31 * (text_hash - ord(text[i]) * 31**(pattern_len-1) + ord(text[i+pattern_len]))
 
-        if pattern_hash == text_part_hash:
-            if pattern == text_part:
-                occurrences.append(i)
-
-    return occurrences 
-
-
-
+    return occurrences
 
 
 if __name__ == '__main__':
